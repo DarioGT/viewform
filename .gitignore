@@ -1,0 +1,4 @@
+*.pyc
+.tox/
+django_viewform.egg-info/
+db.sqlite3
