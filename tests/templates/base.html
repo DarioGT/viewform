@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Viewflow samples</title>
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/github.min.css">
+        {% block css %}
+        {% endblock %}
+    </head>
+    <body>
+        {% block content %}
+        {% endblock %}
+    </body>
+    {% block js %}
+    {% endblock %}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/javascript">
+        // https://github.com/Vitaa/ActiveNavigation
+      (function( $ ) {
+          $.fn.activeNavigation = function(selector) {
+              var pathname = window.location.pathname
+              var hrefs = []
+              $(selector).find("a").each(function(){
+                  if (pathname.indexOf($(this).attr("href")) > -1) 
+                      hrefs.push($(this))
+              });
+              if (hrefs.length) {
+                  hrefs.sort(function(a,b){
+                      return b.attr("href").length - a.attr("href").length
+                  })
+                  hrefs[0].closest('li').addClass("active")
+              }
+          };
+      })(jQuery);
+      $(document).activeNavigation("#nav")
+    </script>
+</html>

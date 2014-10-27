@@ -28,5 +28,8 @@ setup(
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
         'Framework :: Django',
-    ]
+    ],
+    install_requires=[
+        'django-tag-parser>=2.0'
+    ],
 )

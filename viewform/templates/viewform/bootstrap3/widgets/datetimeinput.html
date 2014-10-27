@@ -18,17 +18,17 @@
             {% viewpart field prepend %}{% endviewpart %}{% viewpart field control %}
             <input {% tagattrs %}
                    type="{{ field.widget.input_type }}"
-                   class="form-control"
+                   class="form-control {% viewpart field add_control_class %}{% endviewpart %}"
                    name="{{ bound_field.html_name }}"
                    id="id_{{ bound_field.html_name }}"{% endtagattrs %}{% if bound_field.value %} value="{{ bound_field|datepicker_value }}"{% endif %}>
             {% endviewpart %}{% viewpart field append %}
-		    <span class="input-group-addon"><span class="glyphicon glyphicon-time" style="font-weight:bold"></span></span>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-time" style="font-weight:bold"></span></span>
             {% endviewpart %}
         </div>
     </div>
     {% viewpart field errors %}
         {% if bound_field.errors %}
-            {% include  'viewflow/form/bootstrap3/field_errors.html' %}
+            {% include  'viewform/bootstrap3/field_errors.html' %}
         {% endif %}
     {% endviewpart %}{% viewpart field help_text %}
         {% if field.help_text %}

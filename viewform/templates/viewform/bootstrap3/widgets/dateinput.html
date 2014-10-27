@@ -11,7 +11,7 @@
     {% endviewpart %}
     <div class="input-group" style="width:100%">
         <div {% tagattrs %}
-             class="input-group date"
+             class="input-group date {% viewpart field add_control_class %}{% endviewpart %}"
              data-date-format="{{ field|datepicker_format }}"
              data-min-view="2"
              data-viewform-control="date"{% endtagattrs %}{% if bound_field.value %} data_date="{{ bound_field|datepicker_value }}"{% endif %}>
@@ -28,7 +28,7 @@
     </div>
     {% viewpart field errors %}
         {% if bound_field.errors %}
-            {% include  'viewflow/form/bootstrap3/field_errors.html' %}
+            {% include  'viewform/bootstrap3/field_errors.html' %}
         {% endif %}
     {% endviewpart %}{% viewpart field help_text %}
         {% if field.help_text %}

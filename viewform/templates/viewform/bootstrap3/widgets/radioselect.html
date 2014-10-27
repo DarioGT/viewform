@@ -25,7 +25,7 @@
     {% endviewpart %}{% viewpart field append %}{% endviewpart %}
     {% viewpart field errors %}
         {% if bound_field.errors %}
-            {% include  'viewflow/form/bootstrap3/field_errors.html' %}
+            {% include  'viewform/bootstrap3/field_errors.html' %}
         {% endif %}
     {% endviewpart %}{% viewpart field help_text %}
         {% if field.help_text %}

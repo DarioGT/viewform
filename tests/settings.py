@@ -20,8 +20,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'viewform',
     # Tests
-    'unit',
-    'integration',
+    'tests.unit',
+    'tests.integration',
+    'tests.examples',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -33,7 +34,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'tests.urls'
 
 DATABASES = {
     'default': {
@@ -57,6 +58,11 @@ STATIC_URL = '/static/'
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'tests/templates'),
 )
+
+# shortcut for in form templates
+from django.template.base import add_to_builtins
+add_to_builtins('viewform.templatetags.viewform')
+
 
 try:
     from local_settings import *  # NOQA

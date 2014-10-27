@@ -12,7 +12,7 @@
     <div class="input-group" style="width:100%">
         {% viewpart field prepend %}{% endviewpart %}{% viewpart field control %}
         <select {% tagattrs %}
-                class="form-control"
+                class="form-control {% viewpart field add_control_class %}{% endviewpart %}"
                 name="{{ bound_field.html_name }}"
                 id="id_{{ bound_field.html_name }}"{% endtagattrs %}>
             {% for value, choice in field.widget.choices %}
@@ -23,7 +23,7 @@
     </div>
     {% viewpart field errors %}
         {% if bound_field.errors %}
-            {% include  'viewflow/form/bootstrap3/field_errors.html' %}
+            {% include  'viewform/bootstrap3/field_errors.html' %}
         {% endif %}
     {% endviewpart %}{% viewpart field help_text %}
         {% if field.help_text %}

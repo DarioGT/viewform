@@ -3,19 +3,16 @@ import re
 from collections import defaultdict
 
 from django import template
-from django.conf import settings
-from django.template.loader import get_template, select_template
+from django.template.loader import get_template
+from django.template.loader_tags import IncludeNode
 from django.utils import formats
-from django.utils.encoding import smart_text, force_text
-from django.utils.safestring import mark_safe
+from django.utils.encoding import force_text
 
 from tag_parser import template_tag
 from tag_parser.basetags import BaseNode
 from tag_parser.parser import parse_token_kwargs
 
-from ..viewform import Field
-from ..sidebar import Sidebar
-from .base import get_model_display_data
+from ..base import Field
 
 
 register = template.Library()
@@ -73,10 +70,19 @@ class ViewFormNode(BaseContainerNode):
             context['_viewform_template_pack'] = os.path.dirname(template_name)
             context['_viewform_parts'] = parts
 
+            # direct children
             children = (node for node in self.nodelist if isinstance(node, ViewPartNode))
             for partnode in children:
                 value = partnode.render(context)
                 context['_viewform_parts'][partnode.resolve_part(context)][partnode.section] = value
+
+            # include
+            children = (node for node in self.nodelist if isinstance(node, IncludeNode))
+            for included_list in children:
+                included = included_list.template.resolve(context)
+                for partnode in (node for node in included.nodelist if isinstance(node, ViewPartNode)):
+                    value = partnode.render(context)
+                    context['_viewform_parts'][partnode.resolve_part(context)][partnode.section] = value
 
             return template.render(context)
         finally:
@@ -226,4 +232,9 @@ def datepicker_format(field):
 @register.filter
 def datepicker_value(bound_field):
     return formats.localize_input(bound_field.value(), bound_field.field.input_formats[0])
+
+
+@register.filter('force_text')
+def force_text_impl(value):
+    return force_text(value)
 

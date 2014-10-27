@@ -63,9 +63,10 @@ class Layout(LayoutNode):
 class Fieldset(LayoutNode):
     template_name = 'layout/fieldset.html'
 
-    def __init__(self, label, *elements):
+    def __init__(self, label, *elements, **kwargs):
         self.label = label
         self.elements = _convert_to_field(elements)
+        self.span_columns = kwargs.pop('span_columns', 1)
 
 
 class Inline(LayoutNode):
@@ -106,8 +107,9 @@ class Row(LayoutNode):
 class Column(LayoutNode):
     template_name = 'layout/column.html'
 
-    def __init__(self, *elements):
+    def __init__(self, *elements, **kwargs):
         self.elements = _convert_to_field(elements)
+        self.span_columns = kwargs.pop('span_columns', 1)
 
 
 class Span(object):
