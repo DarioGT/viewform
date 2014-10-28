@@ -230,6 +230,31 @@ def datepicker_format(field):
 
 
 @register.filter
+def jquery_datepicker_format(field):
+    input_format = field.input_formats[0]
+
+    # %a, %A, %z, %f %Z %j %U %W %c %x %X unsupported
+
+    subst = {
+        '%d': 'd',    # Day of the month as a zero-padded decimal number
+        '%b': 'M',    # Month as locale's abbreviated name
+        '%B': 'F',    # Month as locale's full name
+        '%m': 'm',    # Month as a zero-padded decimal number
+        '%y': 'y',    # Year without century as a zero-padded decimal number
+        '%Y': 'Y',    # Year with century as a decimal number
+        '%H': 'H',    # Hour (24-hour clock) as a zero-padded decimal number
+        '%I': 'h',    # Hour (12-hour clock) as a zero-padded decimal number
+        '%p': 'a',     # Locale's equivalent of either AM or PM
+        '%M': 'i',    # Minute as a zero-padded decimal number
+        '%S': 's',    # Second as a zero-padded decimal number
+        '%%': '%'      # A literal '%' character
+    }
+
+    return re.sub('|'.join(re.escape(key) for key in subst.keys()),
+                  lambda k: subst[k.group(0)], input_format)
+
+
+@register.filter
 def datepicker_value(bound_field):
     return formats.localize_input(bound_field.value(), bound_field.field.input_formats[0])
 

@@ -1,5 +1,7 @@
+from datetime import datetime
 from django.template import Template
 from viewform import Layout, Row, Fieldset, Column, Span2, Span3
+
 import django_forms as forms
 
 
@@ -120,4 +122,19 @@ class ComplexLayoutForm(forms.Form):
 
 
 class DatetimePickersForm(forms.Form):
-    pass
+    date_field = forms.DateField(input_formats=['%d.%m.%Y'], initial=datetime.now())
+    datetime_field = forms.DateTimeField(input_formats=['%d.%m.%Y %H:%M'], initial=datetime.now())
+    time_field = forms.TimeField(input_formats=['%H:%M'], initial=datetime.now())
+
+    no_initial_date_field = forms.DateField(input_formats=['%d.%m.%Y'])
+    no_initial_datetime_field = forms.DateTimeField(input_formats=['%d.%m.%Y %H:%M'])
+    no_initial_time_field = forms.TimeField(input_formats=['%H:%M'])
+
+    split_datetime_field = forms.DateTimeField(widget=forms.SplitDateTimeWidget)
+
+    layout = Layout(Row('date_field', 'datetime_field', 'time_field'),
+                    Row('no_initial_date_field', 'no_initial_datetime_field', 'no_initial_time_field'),
+                    Row('split_datetime_field'))
+
+    template_bootstrap = Template("""""")
+    template_foundation = Template("""""")

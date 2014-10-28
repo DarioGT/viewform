@@ -18,6 +18,10 @@ urlpatterns = patterns(
         form_class=forms.ComplexLayoutForm,
         success_url='/bootstrap/complexlayout/',
         template_name="bootstrap.html")),
+    url(r'^bootstrap/datetime/$', generic.FormView.as_view(
+        form_class=forms.DatetimePickersForm,
+        success_url='/bootstrap/datetime/',
+        template_name="bootstrap.html")),
     url(r'^foundation/basic/$', generic.FormView.as_view(
         form_class=forms.BasicElementsForm,
         success_url='/foundation/basic/',
@@ -29,5 +33,9 @@ urlpatterns = patterns(
     url(r'^foundation/complexlayout/$', generic.FormView.as_view(
         form_class=forms.ComplexLayoutForm,
         success_url='/foundation/complexlayout/',
+        template_name="foundation.html")),
+    url(r'^foundation/datetime/$', generic.FormView.as_view(
+        form_class=forms.DatetimePickersForm,
+        success_url='/foundation/datetime/',
         template_name="foundation.html")),
 )
