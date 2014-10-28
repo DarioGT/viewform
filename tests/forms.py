@@ -32,7 +32,7 @@ PRODUCT_TYPE_CHOICES = (
 
 
 class BasicElementsForm(forms.Form):
-    first_name = forms.CharField(max_length=50)
+    first_name = forms.CharField(max_length=50, help_text="How mommy calls you")
     last_name = forms.CharField(max_length=50, required=False)
     email = forms.EmailField()
     date_of_birth = forms.DateField()
@@ -41,11 +41,20 @@ class BasicElementsForm(forms.Form):
     layout = Layout(
         Row('first_name', 'last_name'),
         Row('email', 'date_of_birth'),
-        'password')
+        Row('password'))
 
     template_bootstrap = Template("""
     {% viewpart form.email.field prepend %}
         <div class="input-group-addon">@</div>
+    {% endviewpart %}
+    """)
+
+    template_foundation = Template("""
+    {% viewpart form.email.field field_width %}small-11{% endviewpart %}
+    {% viewpart form.email.field prepend %}
+        <div class="small-1 columns">
+            <span class="prefix">@</span>
+        </div>
     {% endviewpart %}
     """)
 
@@ -67,6 +76,8 @@ class FieldsetForm(forms.Form):
     {% viewpart form.email.field add_control_class %}input-lg{% endviewpart %}
     {% viewpart form.address_line1.field add_control_class %}input-lg{% endviewpart %}
     """)
+
+    template_foundation = Template("""""")
 
 
 class ComplexLayoutForm(forms.Form):
@@ -104,3 +115,9 @@ class ComplexLayoutForm(forms.Form):
         <div class="input-group-addon">.00</div>
     {% endviewpart %}
     """)
+
+    template_foundation = Template("""""")
+
+
+class DatetimePickersForm(forms.Form):
+    pass

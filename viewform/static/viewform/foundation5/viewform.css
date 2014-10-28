@@ -1,0 +1,8 @@
+.required label:before {
+    content: "*";
+    color: red;
+}
+
+small.error {
+    margin-top: -1rem;
+}
