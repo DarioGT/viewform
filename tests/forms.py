@@ -36,12 +36,13 @@ PRODUCT_TYPE_CHOICES = (
 class BasicElementsForm(forms.Form):
     first_name = forms.CharField(max_length=50, help_text="How mommy calls you")
     last_name = forms.CharField(max_length=50, required=False)
+    married = forms.BooleanField(required=False)
     email = forms.EmailField()
     date_of_birth = forms.DateField()
     password = forms.CharField(widget=forms.PasswordInput)
 
     layout = Layout(
-        Row('first_name', 'last_name'),
+        Row('first_name', 'last_name', 'married'),
         Row('email', 'date_of_birth'),
         Row('password'))
 
@@ -96,6 +97,7 @@ class ComplexLayoutForm(forms.Form):
     retail_price = forms.DecimalField(max_value=100, min_value=10, max_digits=5, decimal_places=2)
 
     gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.RadioSelect)
+    desired_gender = forms.MultipleChoiceField(choices=GENDER_CHOICES, widget=forms.CheckboxSelectMultiple)
 
     product_description = forms.Textarea()
 
@@ -105,8 +107,8 @@ class ComplexLayoutForm(forms.Form):
                  Row('vendor', 'product_type'),
                  Row(Column('sku',
                             'stock_level',
-                            span_columns=5),
-                     'gender'),
+                            span_columns=4),
+                      'gender', 'desired_gender'),
                  Row('cost_price', Span2('wholesale_price'), 'retail_price')))
 
     template_bootstrap = Template("""

@@ -1,4 +1,4 @@
-.required label:before {
+.required>div>label:before {
     content: "*";
     color: red;
 }
