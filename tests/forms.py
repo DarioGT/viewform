@@ -118,7 +118,21 @@ class ComplexLayoutForm(forms.Form):
     {% endviewpart %}
     """)
 
-    template_foundation = Template("""""")
+    template_foundation = Template("""
+    {% viewpart form.sku.field field_width %}small-11{% endviewpart %}
+    {% viewpart form.sku.field append %}
+        <div class="small-1 columns">
+            <span class="postfix">.##</span>
+        </div>
+    {% endviewpart %}
+
+    {% viewpart form.stock_level.field field_width %}small-11{% endviewpart %}
+    {% viewpart form.stock_level.field append %}
+        <div class="small-1 columns">
+            <span class="postfix">.00</span>
+        </div>
+    {% endviewpart %}
+    """)
 
 
 class DatetimePickersForm(forms.Form):
