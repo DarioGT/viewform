@@ -1,4 +1,5 @@
 *.pyc
 .tox/
 django_viewform.egg-info/
+deploy
 db.sqlite3
