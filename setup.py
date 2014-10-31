@@ -7,7 +7,7 @@ except IOError:
 
 setup(
     name='django-viewform',
-    version='0.7.0',
+    version='0.1.0',
     description='Template driven form rendering for django.',
     author='Mikhail Podgurskiy',
     author_email='kmmbvnr@gmail.com',
