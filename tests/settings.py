@@ -65,6 +65,6 @@ add_to_builtins('viewform.templatetags.viewform')
 
 
 try:
-    from local_settings import *  # NOQA
+    from deploy.local_settings import *  # NOQA
 except ImportError:
     pass
