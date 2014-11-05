@@ -2,14 +2,55 @@
 django-viewform
 ===============
 
-What if there is another way?
+Template driven form rendering for django
 
-.. image:: http://i.imgur.com/3duy4OZ.gif
+Features
+========
 
-
-Template driven form rendering for data entry applications
+* Strong python/html code separation
+* Complex form layout support
+* Formsets and js goodies out of the box
 
 Demo: http://forms.viewflow.io/
+
+.. image:: .screen.png
+   :width: 400px
+
+
+Installation
+===========
+
+django-viewform tested with Python 2.7/3.3, django 1.6/1.7::
+
+    pip install django-viewform
+
+And add it into INSTALLED_APPS settings
+
+.. code-block:: python
+
+    INSTALLED_APPS = (
+         ...
+         'viewform',
+    )
+
+
+Quick start
+===========
+
+Include formpack javacript and styles into your base template 
+
+.. code-block:: html
+
+        {% include 'viewform/bootstrap3/include_css.html' %}
+        {% include 'viewform/bootstrap3/include_js.html' %}
+
+Packs for bootstrap3 and foundation5 available out of the box
+
+Render your form with {% viewform %} template tag
+
+.. code-block:: html
+
+        {% viewform 'viewform/bootstrap3/form.html' form=form %}{% endviewform %}
 
 
 Template tags
@@ -41,8 +82,87 @@ If your widget is so special, just provide `{% viewpart form.my_field.field %}an
 Layout
 ======
 
-Simple and declarative way to specify relative fields placements and sizes. Layouts rendering details
-itself are also specified in template.
+Layout object is the way to specify relative fields placements and sizes.
+
+.. code-block:: python
+
+    from viewform import *
+
+    layout = Layout(
+        Row('shipment_no', 'description')
+        Fieldset("Add to inventory",
+                 Row(Span3('product_name'), 'tags'),
+                 Row('vendor', 'product_type'),
+                 Row(Column('sku',
+                            'stock_level',
+                            span_columns=4),
+                     'gender', 'desired_gender'),
+                 Row('cost_price', Span2('wholesale_price'), 'retail_price')))
+
+SpanXX elements not directly mapped to bootstrap or foundation grid
+classes, but used to determine relative fields width. Eash row occupy
+12 grid columns.  Elements in Row('elem1', 'elem2') would be rendered
+in 6 grid coulmns each, and in Row(Span2('elem1'), 'elem2') `elem1`
+would be rendered in 8 grid columns, and `elem2` in 4 grid columns.
+
+Layouts rendering itself is specified in template. See
+templates/viewform/<tempalte_pack>/layout code folder for details.
 
 
-See more on `demo page <http://forms.viewflow.io/>`_
+ModelForm Views
+===============
+
+Viewform library provides  LayoutMixin for model form views, populates
+form fields list directly from layout object
+
+.. code-block:: python
+
+    from django import generic
+    from viewform import LayoutMixin
+
+    class SampleView(LayoutMixin, generic.ModelFormView):
+        layout = Layout(...)
+
+
+
+Formset and inlines
+===================
+
+With django-extra-views NamedFormsetsMixin you can use inline names inside viewform layout
+
+
+.. code-block:: python
+
+    class FormsetView(LayoutMixin,
+                      extra_views.NamedFormsetsMixin,
+                      extra_views.CreateWithInlinesView):
+        model = Shipment
+
+        class ItemInline(extra_views.InlineFormSet):
+            model = ShipmentItem
+            fields = ['name', 'quantity']
+
+        layout = Layout(
+            Row(Column('name', 'city'),
+                Column('address_line1', 'address_line2')),
+            Inline('Items', ItemInline)
+        )
+
+
+Changelog
+=========
+
+0.1.0 2014-11-05 - Alpha
+------------------------
+
+* First alpha version extracted from `Viewflow <http://viewflow.io>`_ library
+* Initial bootstrap3 and foundation5 support
+* Basic django widgets support
+
+
+Licence
+=======
+
+Viewform code and html templates licensed under `LGPL <https://www.gnu.org/licenses/lgpl.html>`_
+
+Componets (bootstrap/foundation/jquery and etc) have own licenses. Refererto source code for details
