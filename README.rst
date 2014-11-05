@@ -165,7 +165,7 @@ Changelog
 * Basic django widgets support
 
 
-Licence
+License
 =======
 
 Viewform code and html templates licensed under `LGPL <https://www.gnu.org/licenses/lgpl.html>`_
