@@ -6,7 +6,7 @@
 {% endif %}
 
 <div data-formset-prefix="{{ inline.prefix }}" data-viewform-control="formset">
-    <table class="table">
+    <table style="width:100%">
         <thead>
             <tr>
                 {% for field in inline.empty_form.visible_fields %}
@@ -33,7 +33,7 @@
                             {% viewfield bound_field %}
                         {% else %}
                             <div style="display:none">{{ bound_field }}</div>
-                            <button type="button" class="btn btn-del" data-formset-delete-button><span class="glyphicon glyphicon-remove"></span></button>
+                            <button type="button" class="button alert tiny" data-formset-delete-button><span class="fa fa-remove"></span></button>
                         {% endif %}
                     {% endviewpart %}
                 </td>
@@ -62,7 +62,7 @@
                                             {% endwith %}
                                         {% else %}
                                             <div style="display:none">{{ bound_field }}</div>
-                                            <button type="button" class="button tiny alert" data-formset-delete-button><span class="fa fa-remove"></span></button>
+                                            <button class="button tiny alert" data-formset-delete-button><span class="fa fa-remove"></span></button>
                                         {% endif %}
                                 {% endviewpart %}
                             </td>
@@ -70,7 +70,7 @@
                         {% endviewpart %}
                         </tr>
                     </script>
-                    <button type="button" class="button tiny" data-formset-add><span class="fafa-plus"></span></button>
+                    <button type="button" class="button tiny" data-formset-add><span class="fa fa-plus"></span></button>
                     {% endif %}
                 </td>
                 {% endfor %}

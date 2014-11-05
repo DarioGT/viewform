@@ -2,12 +2,7 @@
 {% load static viewform %}
 
 {% block css %}
-<link href="{% static 'viewform/foundation5/foundation/css/normalize.css' %}" rel="stylesheet">
-<link href="{% static 'viewform/foundation5/foundation/css/foundation.css' %}" rel="stylesheet">
-<link href="{% static 'viewform/foundation5/chosen/chosen.min.css' %}" rel="stylesheet">
-<link href="{% static 'viewform/foundation5/datetimepicker/jquery.datetimepicker.css' %}" rel="stylesheet">
-<link href="{% static 'viewform/foundation5/viewform.css' %}" rel="stylesheet">
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+{% include 'viewform/foundation5/include_css.html' %}
 <style type="text/css">
   .container-full {
       padding-top: 2em;
@@ -38,35 +33,7 @@
 {% endblock %}
 
 {% block js %}
-<script src="{% static  'viewform/foundation5/foundation/js/modernizr.js' %}" type="text/javascript"></script>
-<script src="{% static  'viewform/foundation5/jquery/jquery-2.1.1.min.js' %}" type="text/javascript"></script>
-<script src="{% static  'viewform/foundation5/jquery/jquery.formset.min.js' %}" type="text/javascript"></script>
-<script src="{% static  'viewform/foundation5/jquery/jquery.cookie.js' %}" type="text/javascript"></script>
-<script src="{% static  'viewform/foundation5/foundation/js/fastclick.js' %}" type="text/javascript"></script>
-<script src="{% static  'viewform/foundation5/foundation/js/placeholder.js' %}" type="text/javascript"></script>
-<script src="{% static  'viewform/foundation5/foundation/js/foundation.min.js' %}" type="text/javascript"></script>
-<script src="{% static  'viewform/foundation5/chosen/chosen.jquery.min.js' %}" type="text/javascript"></script>
-<script src="{% static  'viewform/foundation5/datetimepicker/jquery.datetimepicker.js' %}" type="text/javascript"></script>
-<script src="http://momentjs.com/downloads/moment.min.js"></script>
-<script type="text/javascript">
-  $(document).ready(function() {
-      $(document).foundation();
-      $('[data-viewform-control="date"]').each(function() {
-          var input = $(this);
-          input.datetimepicker({format: input.data('date-format'), timepicker:false, mask:true});
-      });
-      $('[data-viewform-control="time"]').each(function() {
-          var input = $(this);
-          input.datetimepicker({format: input.data('date-format'), timepicker:true, mask:true});
-      });
-      $('[data-viewform-control="datetime"]').each(function() {
-          var input = $(this);
-          input.datetimepicker({format: input.data('date-format'), datepicker: false, timepicker:true, mask:true});
-      });
-      $('[data-viewform-control="multiselect"]').chosen({width: '100%'});
-      $('[data-viewform-control="formset"]').formset({'animateForms': true});
-  });
-</script>
+{% include 'viewform/foundation5/include_js.html' %}
 {% endblock %}
 
 {% block content %}
@@ -92,8 +59,14 @@
             {% include 'menu.html' %}
         </div>
         <div class="large-10 medium-9 columns">
+            {% block page_content %}
             <dl class="tabs" data-tab>
+                {% if form.layout %}
                 <dd><a href="#form" role="tab" data-toggle="tab">Form</a></dd>
+                {% endif %}
+                {% if view.layout %}
+                <dd><a href="#view" role="tab" data-toggle="tab">View</a></dd>
+                {% endif %}
                 <dd><a href="#template" role="tab" data-toggle="tab">Template</a></dd>
                 <dd class="active"><a href="#render" role="tab" data-toggle="tab">Render</a></dd>
             </dl>
@@ -102,24 +75,48 @@
                     <div class="panel" style="background-color:#fff">
                         <form method="POST">
                             {% csrf_token %}
-                            {% viewform 'viewform/foundation5/form.html' form=form layout=form.layout %}
-                            {% include form.template_foundation %}
-                            {% endviewform %}
+                            {% if form.layout %}
+                                {% viewform 'viewform/foundation5/form.html' form=form layout=form.layout %}
+                                    {% include form.template_foundation %}
+                                {% endviewform %}
+                            {% endif %}
+                            {% if view.layout %}
+                                {% viewform 'viewform/foundation5/form.html' form=form layout=view.layout %}
+                                    {% include view.template_foundation %}
+                                {% endviewform %}
+                            {% endif %}
                             <button type="submit" name="_submit" class="button">Submit</button>
                         </form>
                     </div>
                 </div>
                 <div class="content" id="template">
+                    {% if form.layout %}
                     <pre><code class="django">&lt;form method="POST"&gt;
 {% verbatim %}{% viewform 'viewform/foundation5/form.html' form=form layout=form.layout %}{% endverbatim %} {{ form.template_foundation.origin.source.rstrip|linebreaksbr }}
 {% verbatim %}{% endviewform %}{% endverbatim %}
 &lt;button type="submit" name="_submit" class="button"&gt;Submit&lt;/button&gt;
 &lt;/form&gt;</code></pre>
+                    {% endif %}
+                    <pre><code class="django">&lt;form method="POST"&gt;
+{% verbatim %}{% viewform 'viewform/foundation5/form.html' form=form layout=view.layout %}{% endverbatim %} {{ view.template_foundation.origin.source.rstrip|linebreaksbr }}
+{% verbatim %}{% endviewform %}{% endverbatim %}
+&lt;button type="submit" name="_submit" class="button"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+                    {% if view.layout %}
+                    {% endif %}
                 </div>
+                {% if form.layout %}
                 <div class="content" id="form">
                     <pre><code class="django">{{ form.source|linebreaksbr }}</code></pre>
                 </div>
+                {% endif %}
+                {% if view.layout %}
+                <div class="content" id="view">
+                    <pre><code class="django">{{ view.source|linebreaksbr }}</code></pre>
+                </div>
+                {% endif %}
             </div>
+            {% endblock %}
         </div>
     </div>
 </div>

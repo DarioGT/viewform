@@ -108,7 +108,7 @@ class ComplexLayoutForm(forms.Form):
                  Row(Column('sku',
                             'stock_level',
                             span_columns=4),
-                      'gender', 'desired_gender'),
+                     'gender', 'desired_gender'),
                  Row('cost_price', Span2('wholesale_price'), 'retail_price')))
 
     template_bootstrap = Template("""

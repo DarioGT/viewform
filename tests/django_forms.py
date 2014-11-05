@@ -1,5 +1,6 @@
 import django
 from django.forms import *  # NOQA
+from viewform import LayoutMixin as ViewformLayoutMixin
 
 
 class DemoFormMixin(object):
@@ -13,4 +14,8 @@ class DemoFormMixin(object):
 
 
 class Form(DemoFormMixin, django.forms.Form):
+    pass
+
+
+class LayoutMixin(DemoFormMixin, ViewformLayoutMixin):
     pass

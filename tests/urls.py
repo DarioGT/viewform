@@ -2,10 +2,12 @@ from django.conf.urls import patterns, url
 from django.views import generic
 
 from tests import forms
+from tests.examples.views import FormsetView
+
 
 urlpatterns = patterns(
     '',
-    url(r'^$', generic.TemplateView.as_view(template_name="index.html")),
+    url(r'^$', generic.RedirectView.as_view(url='/foundation/basic/')),
     url(r'^bootstrap/basic/$', generic.FormView.as_view(
         form_class=forms.BasicElementsForm,
         success_url='/bootstrap/basic/',
@@ -22,6 +24,9 @@ urlpatterns = patterns(
         form_class=forms.DatetimePickersForm,
         success_url='/bootstrap/datetime/',
         template_name="bootstrap.html")),
+    url(r'^bootstrap/formset/$', FormsetView.as_view(
+        success_url='/bootstrap/formset/',
+        template_name="bootstrap.html")),
     url(r'^foundation/basic/$', generic.FormView.as_view(
         form_class=forms.BasicElementsForm,
         success_url='/foundation/basic/',
@@ -37,5 +42,8 @@ urlpatterns = patterns(
     url(r'^foundation/datetime/$', generic.FormView.as_view(
         form_class=forms.DatetimePickersForm,
         success_url='/foundation/datetime/',
+        template_name="foundation.html")),
+    url(r'^foundation/formset/$', FormsetView.as_view(
+        success_url='/foundation/formset/',
         template_name="foundation.html")),
 )

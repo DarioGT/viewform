@@ -32,7 +32,7 @@ but prepend email field with `@` sign.
                  <div class="input-group-addon">@</div>
             {% endviewpart %}
         {% endviewform %}
-        <button type="submit" name="_submit" class="btn btn-primary btn-lg">Submit</button>
+        <button type="submit" name="_submit" class="btn">Submit</button>
     </form>
 
 There is a lot of other viewparts declared in default templates. See template code for details.

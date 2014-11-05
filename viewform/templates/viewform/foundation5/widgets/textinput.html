@@ -3,7 +3,7 @@
     <div class="large-12 columns">
         <label for="{{ bound_field.id_for_label }}"
                class="{% if bound_field.errors %}error{% endif %}">
-            {% viewpart field label %}{{ bound_field.label }}{% endviewpart %}
+            {% viewpart field label %}<span class="{{ sronly }}">{{ bound_field.label }}</span>{% endviewpart %}
             <div class="row collapse">
                 {% viewpart field prepend %}{% endviewpart %}
                 {% viewpart field control %}
