@@ -8,7 +8,7 @@ Features
 ========
 
 * Strong python/html code separation
-* Easy redefenition of particular fields rendering
+* Easy redefinition of particular fields rendering
 * Complex form layout support
 * Formsets and js goodies out of the box
 
@@ -19,7 +19,7 @@ Demo: http://forms.viewflow.io/
 
 
 Installation
-===========
+============
 
 django-viewform tested with Python 2.7/3.3, django 1.6/1.7::
 
@@ -38,7 +38,7 @@ And add it into INSTALLED_APPS settings
 Quick start
 ===========
 
-Include formpack javacript and styles into your base template 
+Include formpack javascript and styles into your base template 
 
 .. code-block:: html
 
@@ -170,4 +170,4 @@ Licence
 
 Viewform code and html templates licensed under `LGPL <https://www.gnu.org/licenses/lgpl.html>`_
 
-Componets (bootstrap/foundation/jquery and etc) have own licenses. Referer to the source code for the details.
+Components (bootstrap/foundation/jquery and etc) have own licenses. Referer to the source code for the details.
