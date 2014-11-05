@@ -8,6 +8,7 @@ Features
 ========
 
 * Strong python/html code separation
+* Easy redefenition of particular fields rendering
 * Complex form layout support
 * Formsets and js goodies out of the box
 
@@ -44,7 +45,7 @@ Include formpack javacript and styles into your base template
         {% include 'viewform/bootstrap3/include_css.html' %}
         {% include 'viewform/bootstrap3/include_js.html' %}
 
-Packs for bootstrap3 and foundation5 available out of the box
+Packs for bootstrap3 and foundation5 are available out of the box
 
 Render your form with {% viewform %} template tag
 
@@ -60,10 +61,10 @@ Render your form with {% viewform %} template tag
 Template tags
 =============
 
-`viewform` built around simple concept called viewpart. `Viewpart` is
-the like django template block, it has a default value and could be
+`viewform` is built around simple concept called viewpart. `Viewpart`
+is like django template block, it has a default value and could be
 overriden.  But `viewparts` are created dynamically for each form
-field, allows you to redefince specific form field html render output.
+field, which allows you to redefine specific form field html render output.
 
 Here is the example of rendering form with predefined bootstrap template,
 but prepend email field with `@` sign.
@@ -103,8 +104,8 @@ Layout object is the way to specify relative fields placements and sizes.
                      'gender', 'desired_gender'),
                  Row('cost_price', Span2('wholesale_price'), 'retail_price')))
 
-SpanXX elements not directly mapped to bootstrap or foundation grid
-classes, but used to determine relative fields width. Eash row occupy
+SpanXX elements are not directly mapped to bootstrap or foundation grid
+classes, but used to determine relative fields width. Each row occupies
 12 grid columns.  Elements in Row('elem1', 'elem2') would be rendered
 in 6 grid coulmns each, and in Row(Span2('elem1'), 'elem2') `elem1`
 would be rendered in 8 grid columns, and `elem2` in 4 grid columns.
@@ -169,4 +170,4 @@ Licence
 
 Viewform code and html templates licensed under `LGPL <https://www.gnu.org/licenses/lgpl.html>`_
 
-Componets (bootstrap/foundation/jquery and etc) have own licenses. Refererto source code for details
+Componets (bootstrap/foundation/jquery and etc) have own licenses. Referer to the source code for the details.
