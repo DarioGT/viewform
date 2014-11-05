@@ -50,7 +50,11 @@ Render your form with {% viewform %} template tag
 
 .. code-block:: html
 
+    <form method="POST">
+        {% csrf_token %}
         {% viewform 'viewform/bootstrap3/form.html' form=form %}{% endviewform %}
+        <button type="submit" name="_submit" class="btn">Submit</button>
+    </form>
 
 
 Template tags
